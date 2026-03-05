@@ -73,3 +73,13 @@ manageTask.changeStatus(16);
 
 manageTask.deleteTask(5);
 manageTask.listTasks();
+
+const textoOriginal = "TiendaPinkyLibros";
+
+// Paso a paso:
+// 1. .split('') -> Convierte el texto en un arreglo de letras: ["S", "m", "a", ...]
+// 2. .reverse() -> Invierte el orden del arreglo: [..., "a", "m", "S"]
+// 3. .join('')  -> Une las letras de nuevo en un solo texto
+const textoInvertido = textoOriginal.split("").reverse().join("");
+
+console.log(textoInvertido); // Resultado: tegduBtramS
