@@ -60,21 +60,24 @@
                 <h2>Crear tarea</h2>
                 <div class="m-3">
                     <label for="tarea" class="form-label">Descripción</label>
-                    <input type="text" class="form-control" id="tarea">
+                    <input type="text" class="form-control" id="tareaInput">
                     <div id="tareaHelp" class="form-text">Ingresa la descripción de tu tarea</div>
                 </div>
                 <div class="m-3">
                     <label for="fecha" class="form-label">Fecha</label>
-                    <input type="date" class="form-control" id="fecha">
+                    <input type="date" class="form-control" id="tareaFecha">
                     <div id="fechaHelp" class="form-text">Ingresa la fecha en que la tarea debe ser ejecutada</div>
                 </div>
                 <div class='m-3'>
-                    <button type="button" class="btn btn-primary">Crear Tarea</button>
-
+                    <button type="button" class="btn btn-primary" id="btnCrearTarea">Crear Tarea</button>
                 </div>
-
             </div>
+            <div class="col-md-6">
+                <h2>Lista de tareas</h2>
+                <ul class="list-group" id="listaTareas">
 
+                </ul>
+            </div>
         </div>
 
     </main>

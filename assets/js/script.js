@@ -74,12 +74,46 @@ manageTask.changeStatus(16);
 manageTask.deleteTask(5);
 manageTask.listTasks();
 
-const textoOriginal = "TiendaPinkyLibros";
+// Leccion 3
+// Capturar elementos del DOM
+const tareaInput = document.getElementById("tareaInput");
+const tareaFecha = document.getElementById("tareaFecha");
+const btnCrearTarea = document.getElementById("btnCrearTarea");
+const listaTareas = document.getElementById("listaTareas");
 
-// Paso a paso:
-// 1. .split('') -> Convierte el texto en un arreglo de letras: ["S", "m", "a", ...]
-// 2. .reverse() -> Invierte el orden del arreglo: [..., "a", "m", "S"]
-// 3. .join('')  -> Une las letras de nuevo en un solo texto
-const textoInvertido = textoOriginal.split("").reverse().join("");
+// Agregamos tareas
+btnCrearTarea.addEventListener("click", () => {
+  crearTarea();
+});
 
-console.log(textoInvertido); // Resultado: tegduBtramS
+// Funcionalidad agregar tarea con tecla enter
+tareaInput.addEventListener("keypress", (event) => {
+  if (event.key === "Enter") {
+    crearTarea();
+  }
+});
+
+// Eliminar tarea con delegacion de eventos
+listaTareas.addEventListener("click", (event) => {
+  //Verificamos si target es li
+  if (event.target.tagName === "LI") {
+    event.target.remove();
+  }
+});
+
+// Función para añadir tareas a la lista
+function crearTarea() {
+  // Validar campo vacío
+  if (tareaInput.value.trim() !== "") {
+    const nuevaTarea = document.createElement("li");
+    nuevaTarea.textContent = `${tareaInput.value} a realizarse el: ${tareaFecha.value}`;
+    nuevaTarea.classList.add("list-group-item");
+
+    listaTareas.appendChild(nuevaTarea);
+
+    //Limpiar input
+    tareaInput.value = "";
+  } else {
+    alert("Escribe una tarea válida");
+  }
+}
