@@ -21,34 +21,23 @@
 
 <body>
     <!-- Añadir un Navbar -->
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">TaskFlow</a>
+            <span class="navbar-brand mb-0 h1 fs-1">TaskFlow</span>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
+                        <a class="nav-link" href="#">Añadir tareas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Dropdown link
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
+                        <a class="nav-link" href="#">Ver Tareas</a>
                     </li>
                 </ul>
             </div>
@@ -57,20 +46,23 @@
     <main class="container my-4">
         <div class="row">
             <div class="col-md-6 ">
-                <h2>Crear tarea</h2>
-                <div class="m-3">
-                    <label for="tarea" class="form-label">Descripción</label>
-                    <input type="text" class="form-control" id="tareaInput">
-                    <div id="tareaHelp" class="form-text">Ingresa la descripción de tu tarea</div>
-                </div>
-                <div class="m-3">
-                    <label for="fecha" class="form-label">Fecha</label>
-                    <input type="date" class="form-control" id="tareaFecha">
-                    <div id="fechaHelp" class="form-text">Ingresa la fecha en que la tarea debe ser ejecutada</div>
-                </div>
-                <div class='m-3'>
-                    <button type="button" class="btn btn-primary" id="btnCrearTarea">Crear Tarea</button>
-                </div>
+                <h2 class="pb-3">Crear tarea</h2>
+                <form class="border rounded-3 p-4 shadow">
+                    <div class="m-3">
+                        <label for="tarea" class="form-label">Descripción:</label>
+                        <input type="text" class="form-control" id="tareaInput">
+                        <div id="tareaHelp" class="form-text">Ingresa la descripción de tu tarea</div>
+                    </div>
+                    <div class="m-3">
+                        <label for="fecha" class="form-label">Fecha Límite:</label>
+                        <input type="datetime-local" class="form-control" id="tareaFecha" required>
+                        <div id="fechaHelp" class="form-text">Ingresa la fecha en que la tarea debe ser
+                            ejecutada</div>
+                    </div>
+                    <div class='m-3'>
+                        <button type="submit" class="btn btn-primary" id="btnCrearTarea">Crear Tarea</button>
+                    </div>
+                </form>
             </div>
             <div class="col-md-6">
                 <h2>Lista de tareas</h2>

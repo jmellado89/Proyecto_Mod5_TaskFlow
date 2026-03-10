@@ -87,9 +87,18 @@ btnCrearTarea.addEventListener("click", () => {
 });
 
 // Funcionalidad agregar tarea con tecla enter
-tareaInput.addEventListener("keypress", (event) => {
+tareaInput.addEventListener("click", (event) => {
   if (event.key === "Enter") {
     crearTarea();
+  }
+});
+
+// Deshabilitar botón cuando hay menos de 3 caracteres con keyup
+tareaInput.addEventListener("keyup", (event) => {
+  if (tareaInput.value.length < 3) {
+    btnCrearTarea.disabled = true;
+  } else {
+    btnCrearTarea.disabled = false;
   }
 });
 
@@ -101,19 +110,40 @@ listaTareas.addEventListener("click", (event) => {
   }
 });
 
+//Realizar hover de tarea con mouseover
+listaTareas.addEventListener("mouseover", (event) => {
+  if (event.target.tagName === "LI") {
+    event.target.style.backgroundColor = "#0d6efd";
+    event.target.style.color = "white";
+  }
+});
+listaTareas.addEventListener("mouseout", (event) => {
+  if (event.target.tagName === "LI") {
+    event.target.style.backgroundColor = "white";
+    event.target.style.color = "black";
+  }
+});
+
 // Función para añadir tareas a la lista
 function crearTarea() {
+  // Formatear el campo de Fecha
+  const opciones = { day: "2-digit", month: "2-digit", year: "numeric" };
+  const fechaFormateada = new Date(tareaFecha.value).toLocaleDateString(
+    "es-ES",
+    opciones,
+  );
   // Validar campo vacío
-  if (tareaInput.value.trim() !== "") {
+  if (tareaInput.value.trim() !== "" && tareaFecha.value.trim() !== "") {
     const nuevaTarea = document.createElement("li");
-    nuevaTarea.textContent = `${tareaInput.value} a realizarse el: ${tareaFecha.value}`;
+    nuevaTarea.textContent = `${tareaInput.value}\n a realizarse el: ${fechaFormateada}`;
     nuevaTarea.classList.add("list-group-item");
 
     listaTareas.appendChild(nuevaTarea);
 
     //Limpiar input
     tareaInput.value = "";
+    tareaFecha.value = "";
   } else {
-    alert("Escribe una tarea válida");
+    alert("Ingresa los campos Descripción y Fecha");
   }
 }
