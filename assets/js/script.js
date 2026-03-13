@@ -1,52 +1,5 @@
-// Crear clase Tarea con ID, descripcion, estado y fechaCreacion
-
-class Task {
-  constructor(id, description, status, createDate) {
-    this.id = id;
-    this.description = description;
-    this.status = status;
-    this.createDate = createDate;
-  }
-}
-
-// Crear clase Gestor de tareas que administre las tareas
-
-class ManageTask {
-  constructor() {
-    this.tasks = [];
-  }
-
-  // CRUD --> Create, Read, Update, Delete
-
-  addTask(task) {
-    this.tasks.push(task);
-  }
-
-  deleteTask(id) {
-    this.tasks = this.tasks.filter((task) => task.id !== id);
-    console.log(`La tarea ${id} ha sido eliminada exitósamente!\n`);
-  }
-
-  listTasks() {
-    console.log("-------- Listado de tareas ------------");
-    console.table(this.tasks); // console.table lo hace ver genial
-  }
-
-  #searchTask(id) {
-    return this.tasks.find((task) => task.id === id);
-  }
-
-  changeStatus(id) {
-    let task = this.#searchTask(id);
-    if (!task) {
-      console.error("No se pudo actualizar: Tarea no encontrada\n");
-      return "No se pudo actualizar: Tarea no encontrada";
-    }
-
-    task.status = !task.status;
-    console.log(`Tarea con id ${id} actualizado exitósamente!\n`);
-  }
-}
+import Task from "./classes/Task.js";
+import ManageTask from "./classes/ManageTask.js";
 
 // Crear instancias de GestorTareas y Tareas
 const manageTask = new ManageTask();
@@ -80,16 +33,24 @@ const tareaInput = document.getElementById("tareaInput");
 const tareaFecha = document.getElementById("tareaFecha");
 const btnCrearTarea = document.getElementById("btnCrearTarea");
 const listaTareas = document.getElementById("listaTareas");
+const formularioTarea = document.getElementById("formTarea");
 
 // Agregamos tareas
 btnCrearTarea.addEventListener("click", () => {
-  crearTarea();
+  setTimeout(() => {
+    crearTarea();
+    alert("Tarea añadida exitósamente!");
+  }, 2000);
 });
 
 // Funcionalidad agregar tarea con tecla enter
 tareaInput.addEventListener("click", (event) => {
   if (event.key === "Enter") {
-    crearTarea();
+    event.preventDefault();
+    setTimeout(() => {
+      crearTarea();
+      alert("Tarea añadida exitósamente!");
+    }, 2000);
   }
 });
 
@@ -134,11 +95,14 @@ function crearTarea() {
   );
   // Validar campo vacío
   if (tareaInput.value.trim() !== "" && tareaFecha.value.trim() !== "") {
-    const nuevaTarea = document.createElement("li");
-    nuevaTarea.textContent = `${tareaInput.value}\n a realizarse el: ${fechaFormateada}`;
-    nuevaTarea.classList.add("list-group-item");
+    const nuevaTarea = `<li class="list-group-item d-flex justify-content-between">
+                        <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="">
+                        <p>${tareaInput.value}</p>
+                        <p>Fecha a realizarse: ${fechaFormateada}</p>
+                    </li>
+`;
 
-    listaTareas.appendChild(nuevaTarea);
+    listaTareas.innerHTML += nuevaTarea;
 
     //Limpiar input
     tareaInput.value = "";
@@ -147,3 +111,63 @@ function crearTarea() {
     alert("Ingresa los campos Descripción y Fecha");
   }
 }
+
+// Tachar tareas realizadas
+
+listaTareas.addEventListener("change", (event) => {
+  if (event.target.classList.contains("form-check-input")) {
+    const checkbox = event.target;
+
+    const contenedorTarea = checkbox.parentElement;
+    const textoTarea = contenedorTarea.querySelector("p"); // El primer <p> es el título
+
+    // 3. Aplicamos o quitamos el tachado según el estado del checkbox
+    if (checkbox.checked) {
+      textoTarea.style.textDecoration = "line-through";
+      textoTarea.style.color = "gray";
+    } else {
+      textoTarea.style.textDecoration = "none";
+      textoTarea.style.color = "inherit";
+    }
+  }
+});
+
+const pokeBaseUrl = "https://pokeapi.co/api/v2";
+const pokeContainer = document.getElementById("poke-container");
+
+const getPokemonById = async (id) => {
+  try {
+    const response = await fetch(`${pokeBaseUrl}/pokemon/${id}`);
+    if (!response.ok) throw new Error("No se encontró el Pokémon");
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error al obtener el Pokémon:", error);
+  }
+};
+
+const saludoPokemon = async () => {
+  // 1. Generar número aleatorio (Rango 1 a 248 según tu ejemplo)
+  const pokeNumber = Math.floor(Math.random() * 248) + 1;
+
+  // 2. Esperar a que la API responda (usando await)
+  const pokemon = await getPokemonById(pokeNumber);
+
+  // 3. Validar que recibimos datos antes de renderizar
+  if (pokemon) {
+    const pokeCard = `
+      <div class="m-3">
+        <img src="${pokemon.sprites.other["official-artwork"].front_default}"
+
+         style="max-height: 100px; width: auto; margin-top: 10px;"
+         alt="${pokemon.name}">
+          <h5 class="card-title">${pokemon.name} quiere que termines tus tareas pendientes!!</h5>
+
+      </div>`;
+
+    pokeContainer.innerHTML = pokeCard;
+  }
+};
+
+// Llamar a la función para que se ejecute al cargar
+saludoPokemon();

@@ -16,7 +16,7 @@
         defer></script>
 
     <!-- Mi JS -->
-    <script src="./assets/js/script.js" defer></script>
+    <script type="module" src="./assets/js/script.js" defer></script>
 </head>
 
 <body>
@@ -44,10 +44,13 @@
         </div>
     </nav>
     <main class="container my-4">
+        <div class="container" id="poke-container">
+
+        </div>
         <div class="row">
             <div class="col-md-6 ">
                 <h2 class="pb-3">Crear tarea</h2>
-                <form class="border rounded-3 p-4 shadow">
+                <form id="formTarea" class="border rounded-3 p-4 shadow">
                     <div class="m-3">
                         <label for="tarea" class="form-label">Descripción:</label>
                         <input type="text" class="form-control" id="tareaInput">
@@ -64,9 +67,10 @@
                     </div>
                 </form>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 my-3">
                 <h2>Lista de tareas</h2>
                 <ul class="list-group" id="listaTareas">
+
 
                 </ul>
             </div>
